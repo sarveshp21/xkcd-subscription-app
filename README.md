@@ -1,237 +1,75 @@
-# XKCD
+*** XKCD Subscription App ***
 
-This project is a PHP-based email verification system where users register using their email, receive a verification code, and subscribe to get a random XKCD comic every day. A CRON job fetches a random XKCD comic and sends it to all registered users every 24 hours.
+--> A simple PHP-based application that allows users to subscribe or unsubscribe via email and receive random XKCD comics in their inbox. Emails are sent locally for testing using MailHog.
 
----
 
-## 🚀 Your Task
+*** Features ***
 
-Your objective is to implement the functionality in the **src/** directory while following these rules:
+1. Email subscription with verification code.
 
-✅ **DO NOT** change function names or modify the file structure.
+2. Unsubscribe with email confirmation.
 
-✅ **DO NOT** modify anything outside the **src/** folder. You can add additional files if required inside **src** folder.
+3. Random XKCD comic fetching via XKCD API.
 
-✅ **DO NOT** hardcode emails; use `registered_emails.txt` as the database.
+4. Local email testing via MailHog.
 
-✅ Implement all required functions in `functions.php`.
 
-✅ Implement a form in `index.php` to take email input and verify via code.
+*** Requirements ***
 
-✅ Implement a CRON job to send XKCD comics to registered users every 24 hours.
+1. XAMPP (PHP 8+)
 
-✅ Implement an unsubscribe feature where users can opt out via email verification.
+2. MailHog for local email testing
 
-✅ Implement `unsubscribe.php` to handle email unsubscription.
 
----
+*** Setup Instructions ***
 
-## 📝 Submission Steps [ Non adherence to this will cause disqualification ]
-1. **Clone** the repository to your local machine.  
-2. **Create a new branch** from the `main` branch. **Do not** push code directly to `main`.  
-3. **Implement** the required features inside the `src/` directory.  
-4. **Push** your code to your **branch** (not `main`).  
-5. **Raise a Pull Request (PR) only once** against the `main` branch when all your code is finalized.  
-   - **Do not raise multiple PRs.**  
-   - **Do not add multiple commits to a PR after submission.**  
-6. **Failure to follow these instructions will result in disqualification.**  
-7. **Wait** for your submission to be reviewed. Do not merge the PR.
+1. Place the project folder in C:/xampp/htdocs/
 
----
+2. Start Apache using the XAMPP Control Panel.
 
-## ⚠️ Important Notes
+3. Run MailHog: 1. Open Command Prompt
+                2. Navigate to your MailHog directory - cd C:/MailHog
+                3. Run: MailHogg
 
-All form elements should always be visible on the page and should not be conditionally rendered. This ensures the assignment can be tested properly at the appropriate steps.
+4. Access the application at: http://localhost/xkcd-sarveshp21/src/
 
-Please ensure that if the base repository shows the original template repo, update it so that your repo's main branch is set as the base branch.
+5. Open the MailHog inbox at: http://localhost:8025/
 
-**Recommended PHP version: 8.3**
 
----
+*** Usage ***
 
-## 📌 Features to Implement
+1. Subscribe:
 
-### 1️⃣ **Email Verification**
-- Users enter their email in a form.
-- A **6-digit numeric code** is generated and emailed to them.
-- Users enter the code in the form to verify and register.
-- Store the verified email in `registered_emails.txt`.
+Enter your email address in the subscription form.
 
-### 2️⃣ **Unsubscribe Mechanism**
-- Emails should include an **unsubscribe link**.
-- Clicking it will take user to the unsubscribe page.
-- Users enter their email in a form.
-- A **6-digit numeric code** is generated and emailed to them.
-- Users enter the code to confirm unsubscription.
+Check MailHog for the verification code.
 
-### 3️⃣ **XKCD Comic Subscription**
-- Every 24 hours, cron job should:
-  - Fetch data from `https://xkcd.com/[randomComicID]/info.0.json`.
-  - Format it as **HTML (not JSON)**.
-  - Send it via email to all registered users.
+Enter the code in the verification form to complete the subscription.
 
----
+2. Send Comics:
 
-## 📜 File Details & Function Stubs
+Use the “Send Comics to Subscribers” form button to email random XKCD comics to all verified subscribers.
 
-You **must** implement the following functions inside `functions.php`:
+3. Unsubscribe:
 
-```php
-function generateVerificationCode() {
-    // Generate and return a 6-digit numeric code
-}
+Enter your email in the Unsubscribe form.
 
-function registerEmail($email) {
-    $file = __DIR__ . '/registered_emails.txt';
-    // Save verified email to registered_emails.txt
-}
+Check MailHog for the unsubscription verification code.
 
-function unsubscribeEmail($email) {
-    $file = __DIR__ . '/registered_emails.txt';
-    // Remove email from registered_emails.txt
-}
+Enter the code in the confirmation form to unsubscribe.
 
-function sendVerificationEmail($email, $code) {
-    // Send an email containing the verification code
-}
 
-function verifyCode($email, $code) {
-    // Check if the provided code matches the sent one
-}
+*** Notes ***
 
-function fetchAndFormatXKCDData() {
-    // Fetch latest data from XKCD API and format as HTML
-}
+Emails are delivered to MailHog (not actual inboxes) for local testing.
 
-function sendXKCDUpdatesToSubscribers() {
-    $file = __DIR__ . '/registered_emails.txt';
-    // Send formatted XKCD data to all registered emails
-}
-```
-## 🔄 CRON Job Implementation
+XKCD comic data is fetched from the official XKCD API.
 
-📌 You must implement a **CRON job** that runs `cron.php` every 24 hours.
 
-📌 **Do not just write instructions**—provide an actual **setup_cron.sh** script inside `src/`.
+*** Assumptions ***
 
-📌 **Your script should automatically configure the CRON job on execution.**
+The app runs on a local XAMPP server with PHP 8+.
 
----
+MailHog is used for local email testing without external SMTP setup.
 
-### 🛠 Required Files
-
-- **`setup_cron.sh`** (Must configure the CRON job)
-- **`cron.php`** (Must handle sending XKCD comics)
-
----
-
-### 🚀 How It Should Work
-
-- The `setup_cron.sh` script should register a **CRON job** that executes `cron.php` every 24 hours.
-- The CRON job **must be automatically added** when the script runs.
-- The `cron.php` file should actually **fetch random XKCD comic** and **send emails** to registered users.
-
----
-
-## 📩 Email Handling
-
-✅ The email content must be in **HTML format** (not JSON).
-
-✅ Use **PHP's `mail()` function** for sending emails.
-
-✅ Each email should include an **unsubscribe link**.
-
-✅ Unsubscribing should trigger a **confirmation code** before removal.
-
-✅ Store emails in `registered_emails.txt` (**Do not use a database**).
-
----
-
-## ❌ Disqualification Criteria
-
-🚫 **Hardcoding** verification codes.
-
-🚫 **Using a database** (use `registered_emails.txt`).
-
-🚫 **Modifying anything outside** the `src/` directory.
-
-🚫 **Changing function names**.
-
-🚫 **Not implementing a working CRON job**.
-
-🚫 **Not formatting emails as HTML**.
-
----
-## 📌 Input & Button Formatting Guidelines
-
-### 📧 Email Input & Submission Button:
-- The email input field must have `name="email"`.
-- The submit button must have `id="submit-email"`.
-
-#### ✅ Example:
-```html
-<input type="email" name="email" required>
-<button id="submit-email">Submit</button>
-```
----
-### 🔢 Verification Code Input & Submission Button:
-
-- The verification input field must have `name="verification_code"`.
-- The submit button must have `id="submit-verification"`.
-
-#### ✅ Example:
-```html
-<input type="text" name="verification_code" maxlength="6" required>
-<button id="submit-verification">Verify</button>
-```
----
-### 🚫 Unsubscribe Email & Submission Button
-- The unsubscribe input field must have `name="unsubscribe_email"`.
-- The submit button must have `id="submit-unsubscribe"`.
-#### ✅ Example:
-```html
-<input type="email" name="unsubscribe_email" required>
-<button id="submit-unsubscribe">Unsubscribe</button>
-```
----
-### 🚫 Unsubscribe Code Input & Submission Button
-- The unsubscribe code input field must have `name="verification_code"`.
-- The submit button must have `id="submit-verification"`.
-#### ✅ Example:
-```html
-<input type="text" name="verification_code" maxlength="6" required>
-<button id="submit-verification">Verify</button>
-```
----
-
-## 📩 Email Content Guidelines
-
-#### ✅ Verification Email:
-- **Subject:** `Your Verification Code`
-- **Body Format:**
-```html
-<p>Your verification code is: <strong>123456</strong></p>
-```
-- Sender: no-reply@example.com
----
-
-### 📩 Email Content Guidelines
-
-⚠️ Note: The Subject and Body of the email must strictly follow the formats below, including the exact HTML structure.
-
-#### ✅ XKCD Comic Email:
-- **Subject:** `Your XKCD Comic`
-- **Body Format:**
-```html
-<h2>XKCD Comic</h2>
-<img src="image_url_here" alt="XKCD Comic">
-<p><a href="#" id="unsubscribe-button">Unsubscribe</a></p>
-```
----
-### ✅ Unsubscribe Confirmation Email:
-- **Subject:** `Confirm Un-subscription`
-- **Body Format:**
-```html
-<p>To confirm un-subscription, use this code: <strong>654321</strong></p>
-```
----
+No user authentication or database integration is implemented.

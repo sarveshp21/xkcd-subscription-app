@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XKCD Email Subscription</title>
+</head>
+<body>
+
+  <h2>Register Email</h2>
+  <form action="index.php" method="POST">
+    <input type="hidden" name="action" value="register">
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <button type="submit">Send Verification Code</button>
+  </form>
+
+  <h2>Verify Email</h2>
+  <form action="index.php" method="POST">
+    <input type="hidden" name="action" value="verify">
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <input type="text" name="code" placeholder="Enter verification code" required>
+    <button type="submit">Verify and Subscribe</button>
+  </form>
+
+  <h2>Unsubscribe Email</h2>
+  <form action="index.php" method="POST">
+    <input type="hidden" name="action" value="unsubscribe">
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <button type="submit">Unsubscribe</button>
+  </form>
+
+  <h2>Send XKCD Comics to All Subscribers</h2>
+  <form action="index.php" method="GET">
+    <input type="hidden" name="send_updates" value="1">
+    <button type="submit">Send Comics</button>
+  </form>
+
+</body>
+</html>
